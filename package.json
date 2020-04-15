@@ -15,10 +15,12 @@
     "express-session": "^1.17.0",
     "express-validator": "^6.4.0",
     "mongodb": "^3.5.5",
-    "mongoose": "^5.9.7"
+    "mongoose": "^5.9.7",
+    "sucrase": "^3.13.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
   },
   "author": "Hamilton Silva <hamiltonsilva55@gmail.com>",
   "description": ""
