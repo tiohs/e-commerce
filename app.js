@@ -1,12 +1,19 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
+// import the Routes 
+const routesAdmin = require('./routes/admin');
+const routesShop = require('./routes/shop');
+
+// Start app 
 
 const app = express();
-app.use((req, res, next)=>{
-    console.log('Hamilton Silva')
-    next();
-})
-app.use((req, res)=>{
-    console.log('Hamilton Silva 2')
-})
+
+app.use(bodyParser.urlencoded({ extended : false })); 
+app.use(routesAdmin);
+app.use(routesShop);
+
+
+
 
 app.listen('5500', ()=> console.log('http://localhost:5500/'));
