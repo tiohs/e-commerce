@@ -10,9 +10,13 @@ const routesShop = require('./routes/shop');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended : false })); 
-app.use(routesAdmin);
+app.use('/admin', routesAdmin);
 app.use(routesShop);
 
+// Error Routes 
+app.use((req, res, next) => {
+    res.status(404).send('<h1>Not Found the page -_-!</h1>')
+})
 
 
 
