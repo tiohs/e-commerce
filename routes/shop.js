@@ -1,21 +1,14 @@
-const path = require('path');
-
+import { getIndex, getProducts, getProduct, getCart, postCart, getOrders, getCheckout } from '../controllers/shop';
 const express = require('express');
-
-const shopController = require('../controllers/shop');
-
+// const = require('../controllers/shop');
 const router = express.Router();
 
-router.get('/', shopController.getIndex);
-
-router.get('/products', shopController.getProducts);
-
-router.get('/products/:productId', shopController.getProduct);
-
-router.get('/cart', shopController.getCart);
-
-router.get('/orders', shopController.getOrders);
-
-router.get('/checkout', shopController.getCheckout);
+router.get('/', getIndex);
+router.get('/products', getProducts);
+router.get('/products/:productId', getProduct);
+router.get('/cart', getCart);// GEt Cart 
+router.post('/cart', postCart);// Post Card 
+router.get('/orders', getOrders);
+router.get('/checkout', getCheckout);
 
 module.exports = router;
