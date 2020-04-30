@@ -12,7 +12,11 @@ const getProductsFromFile = cb => {
     if (err) {
       cb([]);
     } else {
-      cb(JSON.parse(fileContent));
+      if(String(fileContent)) {
+        
+        return cb(JSON.parse(fileContent)); 
+      }
+      return cb([]);
     }
   });
 };
@@ -26,6 +30,7 @@ module.exports = class Product {
   }
 
   save() {
+    this.id = Math.random().toString();
     getProductsFromFile(products => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), err => {
@@ -36,5 +41,11 @@ module.exports = class Product {
 
   static fetchAll(cb) {
     getProductsFromFile(cb);
+  }
+  static findById(p, cb){
+    getProductsFromFile(product => {
+      const result = product.find(prod => prod.id === p);
+      cb(result);
+    });
   }
 };
