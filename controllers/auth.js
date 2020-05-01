@@ -41,6 +41,7 @@ exports.postSignup = (req, res, nex) => {
 	User.findOne({ email })
 		.then(userDoc => {
 			if (userDoc) {
+				console.log(userDoc);
 				return res.redirect("/signup");
 			}
 			return bcryptjs.hash(password, 12);
@@ -57,7 +58,7 @@ exports.postSignup = (req, res, nex) => {
 			return user.save();
 		})
 		.then(result => {
-			res.redirect("/login");
+			return res.redirect("/login");
 		})
 		.catch(err => console.log(err));
 };
