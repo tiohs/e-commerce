@@ -14,7 +14,6 @@ module.exports = class Cart {
         fs.readFile(p, (err, fileContent) => {
             let cart = { products: [], totalPrice: 0};
             if(!err) {
-                console.log(fileContent);
                 if(String(fileContent)){
                     cart = JSON.parse(fileContent);
                 }
