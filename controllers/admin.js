@@ -29,22 +29,26 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
-  const price = req.body.price;
-  const description = req.body.description;
-  const product = new Product(null, title, imageUrl, description, price);
+  let productDate = [
+    req.body.title,
+    req.body.imageUrl,
+    req.body.description,
+    req.body.price
+    ];
+  const product = new Product(null, ...productDate);
   product.save();
   res.redirect('/');
 };
 
 exports.postEditProduct = (req, res, next) => {
-  const prodId = req.body.productId;
-  const upgratTitle = req.body.title;
-  const upgratImageUrl = req.body.imageUrl;
-  const upgratPrice = req.body.price;
-  const upgratDescription = req.body.description;
-  const upgratProduct = new Product(prodId, upgratTitle, upgratImageUrl, upgratDescription, upgratPrice);
+  let upgratDate = [
+    req.body.productId,
+    req.body.title,
+    req.body.imageUrl,
+    req.body.description,
+    req.body.price
+    ];
+  const upgratProduct = new Product(...upgratDate);
   upgratProduct.save();
   res.redirect('/');
 };
@@ -58,3 +62,9 @@ exports.getProducts = (req, res, next) => {
     });
   });
 };
+
+exports.postDeleteProduct = (req, res, next) => {
+   prodId = req.body.productId;
+   Product.Delete(prodId);
+   res.redirect('/products')
+}
