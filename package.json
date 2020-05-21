@@ -17,6 +17,7 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.7",
     "mysql2": "^2.1.0",
+    "sequelize": "^5.21.10",
     "sucrase": "^3.13.0"
   },
   "scripts": {
