@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const sequelise = require('./util/db');
 const User = require('./models/user');
 const Product = require('./models/product');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cartItem');
 
 const errorController = require('./controllers/error');
 
@@ -34,19 +36,30 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
+// Ass. the tables 
 Product.belongsTo(User, {constraints : true, onDelete : 'CASCADE'});
 User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem});
+Product.belongsToMany(Cart, { through: CartItem});
 
-sequelise.sync().then((result) => {    
-    return User.findByPk(1); 
-}).then((user) => {
-    app.listen(3000, () => {console.log('http://localhost:3000/');});
-    if(!user){
-        return User.create({
-            name : 'Hamilton Silva',
-            email : 'test@test.com'
-        });
-    }
-    return Promise.resolve(user);
-}).catch(error => console.log(error));
+sequelise
+  //  .sync({ force : true })
+     .sync()
+    .then((result) => {    
+        return User.findByPk(1); 
+    }).then((user) => {
+        if(!user){
+            return User.create({
+                name : 'Hamilton Silva',
+                email : 'test@test.com'
+            });
+        }
+        return user;
+    }).then(user => {
+        user.createCart();
+    }).then(cart => {
+        app.listen(3000, () => {console.log('http://localhost:3000/');});
+    }).catch(error => console.log(error));
 
