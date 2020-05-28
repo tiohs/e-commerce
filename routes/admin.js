@@ -6,13 +6,13 @@ const router = express.Router();
 router.get('/add-product', adminController.getAddProduct);
 
 // /admin/products => GET
-// router.get('/products', adminController.getProducts);
+router.get('/products', adminController.getProducts);
 
 // /admin/add-product => POST
 router.post('/add-product', adminController.postAddProduct);
 
 // // Edit Porduct get 
-// router.get('/edit-product/:productId', adminController.getEditProduct);
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
 // // Edit product post 
 // router.post('/edit-product', adminController.postEditProduct);
