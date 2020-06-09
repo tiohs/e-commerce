@@ -13,7 +13,6 @@ const errorController = require("./controllers/error");
 const User = require("./models/user");
 
 const app = express();
-
 const store = new MongoDBStore({
 	url: url,
 	collection: "sessions",
@@ -38,8 +37,12 @@ app.use(
 		store: store,
 	}),
 );
+
 app.use((req, res, next) => {
-	User.findById("5ed80e4c4b5cd604349f3174")
+	if (!req.session.user) {
+		return next();
+	}
+	User.findById(req.session.user._id)
 		.then(user => {
 			req.user = user;
 			next();
@@ -56,6 +59,18 @@ app.use(errorController.get404);
 mongoose
 	.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
 	.then(result => {
+		User.findOne().then(user => {
+			if (!user) {
+				const user = new User({
+					name: "Hamilton Silca",
+					email: "hs@hs.com",
+					cart: {
+						items: [],
+					},
+				});
+				user.save();
+			}
+		});
 		app.listen(3000);
 	})
 	.catch(err => {
