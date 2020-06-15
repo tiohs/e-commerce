@@ -59,18 +59,6 @@ app.use(errorController.get404);
 mongoose
 	.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
 	.then(result => {
-		User.findOne().then(user => {
-			if (!user) {
-				const user = new User({
-					name: "Hamilton Silca",
-					email: "hs@hs.com",
-					cart: {
-						items: [],
-					},
-				});
-				user.save();
-			}
-		});
 		app.listen(3000);
 	})
 	.catch(err => {
