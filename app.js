@@ -1,5 +1,4 @@
 const path = require("path");
-
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -53,7 +52,6 @@ app.use((req, res, next) => {
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
-
 app.use(errorController.get404);
 
 mongoose
