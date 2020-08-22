@@ -13,11 +13,11 @@ const User = require("./models/user");
 
 const app = express();
 const store = new MongoDBStore({
-	url: url,
-	collection: "sessions",
-	databaseName: "E-commerce",
+  url: url,
+  collection: "sessions",
+  databaseName: "E-commerce",
 });
-
+app.use(express.json());
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -29,24 +29,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "img")));
 app.use(
-	session({
-		secret: "My secret",
-		resave: false,
-		saveUninitialized: false,
-		store: store,
-	}),
+  session({
+    secret: "My secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+  })
 );
 
 app.use((req, res, next) => {
-	if (!req.session.user) {
-		return next();
-	}
-	User.findById(req.session.user._id)
-		.then(user => {
-			req.user = user;
-			next();
-		})
-		.catch(err => console.log(err));
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
 });
 
 app.use("/admin", adminRoutes);
@@ -55,10 +55,12 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-	.connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
-	.then(result => {
-		app.listen(3000);
-	})
-	.catch(err => {
-		console.log(err);
-	});
+  .connect(url, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then((result) => {
+    app.listen(3000, () => {
+      console.log("http://localhost:3000/");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
