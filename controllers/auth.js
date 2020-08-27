@@ -16,6 +16,7 @@ exports.getSignup = (req, res, nex) => {
     pageTitle: "Signup",
     path: "/signup",
     isAuthenticated: false,
+    error: req.flash("errorEmail")[0],
   });
 };
 
@@ -56,6 +57,10 @@ exports.postSignup = (req, res, nex) => {
   User.findOne({ email })
     .then((userDoc) => {
       if (userDoc) {
+        req.flash(
+          "errorEmail",
+          "Email exists already, please pick a different one."
+        );
         return res.redirect("/signup");
       }
       return bcryptjs

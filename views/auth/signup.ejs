@@ -5,8 +5,10 @@
 
 <body>
    <%- include('../includes/navigation.ejs') %>
-
     <main>
+        <% if(error) { %>
+            <div class="user-message user-message--error"><%= error %></div>
+            <% } %>
         <form class="login-form" action="/signup" method="POST">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control">
